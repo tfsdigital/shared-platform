@@ -1,8 +1,8 @@
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Events;
 using Shared.Handlers.Extensions;
 using Shared.Results;
+using System.Reflection;
 
 namespace Shared.Handlers.Tests.Extensions;
 

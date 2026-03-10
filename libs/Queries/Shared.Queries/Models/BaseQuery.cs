@@ -1,12 +1,12 @@
-﻿namespace Shared.Queries.Models;
+namespace Shared.Queries.Models;
 
 public abstract record BaseQuery
 {
     // Constants
 
-    private const int DefaultPage = 1;
-    private const int DefaultPageSize = 10;
-    private const int MaxPageSize = 25;
+    private const int _defaultPage = 1;
+    private const int _defaultPageSize = 10;
+    private const int _maxPageSize = 25;
 
     protected BaseQuery(int? page, int? pageSize, string? orderBy)
     {
@@ -26,7 +26,7 @@ public abstract record BaseQuery
 
     private static int SetPage(int? page)
     {
-        return page ?? DefaultPage;
+        return page ?? _defaultPage;
     }
 
     private static string? SetOrder(string? orderBy)
@@ -36,8 +36,8 @@ public abstract record BaseQuery
 
     private static int SetPageSize(int? value)
     {
-        var pageSize = value ?? DefaultPageSize;
+        var pageSize = value ?? _defaultPageSize;
 
-        return pageSize > MaxPageSize ? MaxPageSize : pageSize;
+        return pageSize > _maxPageSize ? _maxPageSize : pageSize;
     }
 }

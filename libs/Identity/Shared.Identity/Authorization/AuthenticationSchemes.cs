@@ -1,4 +1,4 @@
-﻿namespace Shared.Identity.Authorization;
+namespace Shared.Identity.Authorization;
 
 public static class AuthenticationSchemes
 {

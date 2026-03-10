@@ -1,4 +1,4 @@
-﻿namespace Shared.Outbox.Settings;
+namespace Shared.Outbox.Settings;
 
 public record OutboxSettings
 {

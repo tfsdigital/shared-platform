@@ -1,4 +1,4 @@
-﻿namespace Shared.Queries.Pagination;
+namespace Shared.Queries.Pagination;
 
 public interface IPagedList<out TItem>
     where TItem : class

@@ -1,7 +1,7 @@
-﻿using System.Text;
 using RabbitMQ.Client;
 using Shared.Messaging.Abstractions;
 using Shared.Messaging.Connection;
+using System.Text;
 
 namespace Shared.Messaging;
 

@@ -1,4 +1,4 @@
-﻿namespace Shared.Handlers;
+namespace Shared.Handlers;
 
 public interface ICommand;
 

@@ -1,5 +1,5 @@
-using System.Security.Claims;
 using Shared.Identity.Authorization;
+using System.Security.Claims;
 
 namespace Shared.Identity.Tests.Authorization;
 

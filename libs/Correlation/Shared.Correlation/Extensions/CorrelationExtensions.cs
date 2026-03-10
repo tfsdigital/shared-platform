@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Correlation.Context;
 
 namespace Shared.Correlation.Extensions;

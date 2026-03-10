@@ -1,4 +1,4 @@
-﻿using Shared.Results;
+using Shared.Results;
 
 namespace Shared.Validations;
 

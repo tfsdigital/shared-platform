@@ -1,4 +1,4 @@
-﻿namespace Shared.Correlation.Context;
+namespace Shared.Correlation.Context;
 
 public interface ICorrelationContext
 {

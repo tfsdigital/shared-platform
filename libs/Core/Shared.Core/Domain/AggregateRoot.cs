@@ -1,4 +1,4 @@
-﻿using Shared.Core.Events;
+using Shared.Core.Events;
 
 namespace Shared.Core.Domain;
 

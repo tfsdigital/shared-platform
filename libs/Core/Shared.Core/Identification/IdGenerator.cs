@@ -1,4 +1,4 @@
-﻿namespace Shared.Core.Identification;
+namespace Shared.Core.Identification;
 
 public static class IdGenerator
 {

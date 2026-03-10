@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Messaging.Abstractions;
 using Shared.Messaging.Connection;
 

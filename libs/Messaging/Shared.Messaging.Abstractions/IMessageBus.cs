@@ -1,4 +1,4 @@
-﻿namespace Shared.Messaging.Abstractions;
+namespace Shared.Messaging.Abstractions;
 
 public interface IMessageBus
 {

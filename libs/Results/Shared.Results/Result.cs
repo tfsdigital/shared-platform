@@ -1,4 +1,4 @@
-﻿namespace Shared.Results;
+namespace Shared.Results;
 
 public record Result
 {

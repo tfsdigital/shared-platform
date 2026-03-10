@@ -1,4 +1,4 @@
-﻿namespace Shared.Core.Events;
+namespace Shared.Core.Events;
 
 public abstract record IntegrationEvent : IIntegrationEvent
 {

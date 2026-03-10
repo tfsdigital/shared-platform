@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Npgsql;
 using Shared.Inbox.Models;
 using Shared.Inbox.Settings;

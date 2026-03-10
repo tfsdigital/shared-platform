@@ -1,6 +1,6 @@
-using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
 using NSubstitute;
+using System.Text.Json;
 
 namespace Shared.Caching.Distributed.Tests;
 

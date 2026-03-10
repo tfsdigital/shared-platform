@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
 using Shared.Core.Events;
 using Shared.Core.Identification;
+using System.Text.Json;
 
 namespace Shared.Inbox.Models;
 

@@ -1,4 +1,4 @@
-﻿using Shared.Core.Identification;
+using Shared.Core.Identification;
 
 namespace Shared.Core.Events;
 

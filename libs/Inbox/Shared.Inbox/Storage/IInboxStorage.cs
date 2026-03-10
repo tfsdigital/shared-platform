@@ -1,4 +1,4 @@
-﻿using Shared.Inbox.Models;
+using Shared.Inbox.Models;
 
 namespace Shared.Inbox.Storage;
 

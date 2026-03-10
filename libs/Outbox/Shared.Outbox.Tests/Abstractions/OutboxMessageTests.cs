@@ -1,5 +1,5 @@
-using System.Text.Json;
 using Shared.Outbox.Abstractions;
+using System.Text.Json;
 
 namespace Shared.Outbox.Tests.Abstractions;
 

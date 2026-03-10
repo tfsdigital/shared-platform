@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 
 namespace Shared.Messaging.Connection;

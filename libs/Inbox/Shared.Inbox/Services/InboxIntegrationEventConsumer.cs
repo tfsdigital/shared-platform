@@ -1,5 +1,3 @@
-﻿using System.Text;
-using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -9,6 +7,8 @@ using Shared.Inbox.Models;
 using Shared.Inbox.Settings;
 using Shared.Inbox.Storage;
 using Shared.Messaging.Connection;
+using System.Text;
+using System.Text.Json;
 
 namespace Shared.Inbox.Services;
 

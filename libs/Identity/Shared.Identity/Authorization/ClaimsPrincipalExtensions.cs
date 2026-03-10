@@ -1,5 +1,5 @@
-﻿using System.Security.Claims;
 using Shared.Identity.Authentication;
+using System.Security.Claims;
 
 namespace Shared.Identity.Authorization;
 

@@ -1,6 +1,6 @@
-﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Core.Events;
+using System.Reflection;
 
 namespace Shared.Handlers.Extensions;
 

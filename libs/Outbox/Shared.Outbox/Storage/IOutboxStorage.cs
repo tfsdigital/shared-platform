@@ -1,4 +1,4 @@
-﻿using Shared.Outbox.Abstractions;
+using Shared.Outbox.Abstractions;
 
 namespace Shared.Outbox.Storage;
 

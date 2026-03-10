@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
 using Shared.Core.Identification;
+using System.Diagnostics;
 
 namespace Shared.Correlation.Context;
 

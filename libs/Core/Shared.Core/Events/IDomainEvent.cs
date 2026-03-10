@@ -1,3 +1,3 @@
-﻿namespace Shared.Core.Events;
+namespace Shared.Core.Events;
 
 public interface IDomainEvent : IEventBase;

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Shared.Outbox.Abstractions;
 
 namespace Shared.Outbox.Database;

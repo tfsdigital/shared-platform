@@ -1,4 +1,4 @@
-﻿namespace Shared.Queries.Pagination;
+namespace Shared.Queries.Pagination;
 
 public class PagedList<TItem>(IEnumerable<TItem>? items, long count, int pageNumber, int pageSize)
     : IPagedList<TItem>

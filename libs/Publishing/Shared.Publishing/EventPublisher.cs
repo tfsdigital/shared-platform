@@ -1,18 +1,18 @@
-using System.Collections.Concurrent;
 using Shared.Core.Events;
+using System.Collections.Concurrent;
 
 namespace Shared.Publishing;
 
 public class EventPublisher(IServiceProvider serviceProvider) : IEventPublisher
 {
-    private static readonly ConcurrentDictionary<Type, IEventHandlerWrapper> EventHandlers = new();
+    private static readonly ConcurrentDictionary<Type, IEventHandlerWrapper> _eventHandlers = new();
 
     public Task Publish<TEvent>(TEvent eventBase, CancellationToken cancellationToken = default)
         where TEvent : IEventBase
     {
         ArgumentNullException.ThrowIfNull(eventBase);
 
-        var handler = EventHandlers.GetOrAdd(
+        var handler = _eventHandlers.GetOrAdd(
             eventBase.GetType(),
             static eventType =>
             {

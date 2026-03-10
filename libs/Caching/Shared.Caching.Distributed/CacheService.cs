@@ -1,11 +1,13 @@
-﻿using System.Buffers;
-using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Buffers;
+using System.Text.Json;
 
 namespace Shared.Caching.Distributed;
 
 public class CacheService(IDistributedCache cache) : ICacheService
 {
+    private static readonly TimeSpan _defaultCacheExpiration = TimeSpan.FromMinutes(2);
+
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
     {
         var bytes = await cache.GetAsync(key, cancellationToken);
@@ -13,12 +15,8 @@ public class CacheService(IDistributedCache cache) : ICacheService
         return bytes is null ? default : Deserialize<T>(bytes);
     }
 
-    public Task SetAsync<T>(
-        string key,
-        T value,
-        TimeSpan? expiration = null,
-        CancellationToken cancellationToken = default
-    )
+    public Task SetAsync<T>(string key, T value, TimeSpan? expiration = null,
+        CancellationToken cancellationToken = default)
     {
         var bytes = Serialize(value);
 
@@ -30,8 +28,6 @@ public class CacheService(IDistributedCache cache) : ICacheService
 
     private static T Deserialize<T>(byte[] bytes) => JsonSerializer.Deserialize<T>(bytes)!;
 
-    private static readonly TimeSpan DefaultCacheExpiration = TimeSpan.FromMinutes(2);
-
     private static byte[] Serialize<T>(T value)
     {
         var buffer = new ArrayBufferWriter<byte>();
@@ -41,5 +37,5 @@ public class CacheService(IDistributedCache cache) : ICacheService
     }
 
     private static DistributedCacheEntryOptions CreateCacheOptions(TimeSpan? expiration) =>
-        new() { AbsoluteExpirationRelativeToNow = expiration ?? DefaultCacheExpiration };
+        new() { AbsoluteExpirationRelativeToNow = expiration ?? _defaultCacheExpiration };
 }

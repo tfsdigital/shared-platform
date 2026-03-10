@@ -1,4 +1,4 @@
-﻿namespace Shared.Inbox.Settings;
+namespace Shared.Inbox.Settings;
 
 public record InboxSettings
 {
