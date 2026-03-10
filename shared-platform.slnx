@@ -1,0 +1,56 @@
+<Solution>
+  <Folder Name="Caching">
+    <Project Path="Caching/Shared.Caching/Shared.Caching.csproj" />
+    <Project Path="Caching/Shared.Caching.Distributed/Shared.Caching.Distributed.csproj" />
+    <Project Path="Caching/Shared.Caching.Distributed.Tests/Shared.Caching.Distributed.Tests.csproj" />
+  </Folder>
+  <Folder Name="Core">
+    <Project Path="Core/Shared.Core/Shared.Core.csproj" />
+    <Project Path="Core/Shared.Core.Tests/Shared.Core.Tests.csproj" />
+  </Folder>
+  <Folder Name="Correlation">
+    <Project Path="Correlation/Shared.Correlation/Shared.Correlation.csproj" />
+    <Project Path="Correlation/Shared.Correlation.OpenTelemetry/Shared.Correlation.OpenTelemetry.csproj" />
+    <Project Path="Correlation/Shared.Correlation.Tests/Shared.Correlation.Tests.csproj" />
+    <Project Path="Correlation/Shared.Correlation.OpenTelemetry.Tests/Shared.Correlation.OpenTelemetry.Tests.csproj" />
+  </Folder>
+  <Folder Name="Handlers">
+    <Project Path="Handlers/Shared.Handlers/Shared.Handlers.csproj" />
+    <Project Path="Handlers/Shared.Handlers.Tests/Shared.Handlers.Tests.csproj" />
+  </Folder>
+  <Folder Name="Identity">
+    <Project Path="Identity/Shared.Identity/Shared.Identity.csproj" />
+    <Project Path="Identity/Shared.Identity.Tests/Shared.Identity.Tests.csproj" />
+  </Folder>
+  <Folder Name="Inbox">
+    <Project Path="Inbox/Shared.Inbox/Shared.Inbox.csproj" />
+    <Project Path="Inbox/Shared.Inbox.Tests/Shared.Inbox.Tests.csproj" />
+  </Folder>
+  <Folder Name="Messaging">
+    <Project Path="Messaging/Shared.Messaging.Abstractions/Shared.Messaging.Abstractions.csproj" />
+    <Project Path="Messaging/Shared.Messaging/Shared.Messaging.csproj" />
+    <Project Path="Messaging/Shared.Messaging.Tests/Shared.Messaging.Tests.csproj" />
+  </Folder>
+  <Folder Name="Outbox">
+    <Project Path="Outbox/Shared.Outbox.Abstractions/Shared.Outbox.Abstractions.csproj" />
+    <Project Path="Outbox/Shared.Outbox/Shared.Outbox.csproj" />
+    <Project Path="Outbox/Shared.Outbox.Tests/Shared.Outbox.Tests.csproj" />
+  </Folder>
+  <Folder Name="Publishing">
+    <Project Path="Publishing/Shared.Publishing/Shared.Publishing.csproj" />
+    <Project Path="Publishing/Shared.Publishing.Tests/Shared.Publishing.Tests.csproj" />
+  </Folder>
+  <Folder Name="Queries">
+    <Project Path="Queries/Shared.Queries/Shared.Queries.csproj" />
+    <Project Path="Queries/Shared.Queries.Tests/Shared.Queries.Tests.csproj" />
+  </Folder>
+  <Folder Name="Results">
+    <Project Path="Results/Shared.Results/Shared.Results.csproj" />
+    <Project Path="Results/Shared.Results.Extensions/Shared.Results.Extensions.csproj" />
+    <Project Path="Results/Shared.Results.Tests/Shared.Results.Tests.csproj" />
+  </Folder>
+  <Folder Name="Validations">
+    <Project Path="Validations/Shared.Validations/Shared.Validations.csproj" />
+    <Project Path="Validations/Shared.Validations.Tests/Shared.Validations.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <Authors>DevFactory Labs</Authors>
+    <Company>DevFactory Labs</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/devfactorylabs/shared-platform</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/devfactorylabs/shared-platform</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="All" />
+  </ItemGroup>
+</Project>

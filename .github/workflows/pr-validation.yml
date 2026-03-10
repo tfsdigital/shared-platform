@@ -1,0 +1,64 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # required for MinVer to read git tags
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore
+        run: dotnet restore shared-platform.slnx
+
+      - name: Build
+        run: dotnet build shared-platform.slnx --no-restore --configuration Release
+
+      - name: Test
+        run: |
+          dotnet test shared-platform.slnx \
+            --no-build \
+            --configuration Release \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./coverage-results \
+            --logger "trx;LogFileName=test-results.trx"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: coverage-results/
+
+      - name: Generate coverage report
+        run: |
+          dotnet tool restore
+          dotnet reportgenerator \
+            -reports:"coverage-results/**/coverage.cobertura.xml" \
+            -targetdir:"coverage-report" \
+            -reporttypes:"Html;MarkdownSummaryGithub"
+
+      - name: Post coverage summary
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('coverage-report/SummaryGithub.md', 'utf8');
+            await core.summary.addRaw(summary).write();
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage-report/

@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # MinVer needs full tag history
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore
+        run: dotnet restore shared-platform.slnx
+
+      - name: Build
+        run: dotnet build shared-platform.slnx --no-restore --configuration Release
+
+      - name: Test
+        run: |
+          dotnet test shared-platform.slnx \
+            --no-build \
+            --configuration Release
+
+      - name: Pack
+        run: |
+          dotnet pack shared-platform.slnx \
+            --no-build \
+            --configuration Release \
+            --output ./nupkgs
+
+      - name: Publish to GitHub Packages
+        run: |
+          dotnet nuget push "./nupkgs/*.nupkg" \
+            --source "https://nuget.pkg.github.com/devfactorylabs/index.json" \
+            --api-key ${{ secrets.GITHUB_TOKEN }} \
+            --skip-duplicate
