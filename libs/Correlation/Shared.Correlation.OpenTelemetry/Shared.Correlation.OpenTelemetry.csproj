@@ -1,17 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <Description>OpenTelemetry log processor that enriches log records with the request correlation ID.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Shared.Correlation\Shared.Correlation.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" Visible="false" Link="README.md" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="OpenTelemetry" Version="1.12.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shared.Correlation\Shared.Correlation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTelemetry" Version="1.12.0" />
+  </ItemGroup>
 
 </Project>
