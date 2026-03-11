@@ -60,6 +60,7 @@ jobs:
           dotnet test shared-platform.slnx \
             --configuration Release \
             --collect:"XPlat Code Coverage" \
+            --settings coverlet.runsettings \
             --results-directory ./coverage-results \
             --logger "trx;LogFileName=test-results.trx"
 
