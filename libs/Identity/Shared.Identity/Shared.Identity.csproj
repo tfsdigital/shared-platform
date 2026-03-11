@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Description>JWT authentication, claims extraction, and shared role names for ASP.NET Core applications.</Description>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>..\README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>

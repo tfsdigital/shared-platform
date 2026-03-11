@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Description>RabbitMQ message bus implementation for publishing and consuming integration events.</Description>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>..\README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
