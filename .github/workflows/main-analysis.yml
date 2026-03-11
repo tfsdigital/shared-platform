@@ -53,7 +53,6 @@ jobs:
       - name: Test
         run: |
           dotnet test shared-platform.slnx \
-            --no-build \
             --configuration Release \
             --collect:"XPlat Code Coverage" \
             --settings coverlet.runsettings \
