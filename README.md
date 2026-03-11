@@ -1,4 +1,4 @@
-# Shared Libraries
+# Shared Libraries Project
 
 Cross-cutting libraries used across bounded contexts (establishments, orders, products, notifications).
 
