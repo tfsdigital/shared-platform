@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   build-and-test:
@@ -14,7 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # required for MinVer to read git tags
+          fetch-depth: 0  # required for MinVer and SonarCloud blame info
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -27,6 +34,21 @@ jobs:
       - name: Restore
         run: dotnet restore shared-platform.slnx
 
+      - name: Install SonarCloud scanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: SonarCloud Begin
+        run: |
+          dotnet sonarscanner begin \
+            /k:"${{ vars.SONAR_PROJECT_KEY }}" \
+            /o:"${{ vars.SONAR_ORGANIZATION_KEY }}" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.cobertura.reportsPaths="coverage-results/**/coverage.cobertura.xml" \
+            /d:sonar.pullrequest.key="${{ github.event.pull_request.number }}" \
+            /d:sonar.pullrequest.branch="${{ github.head_ref }}" \
+            /d:sonar.pullrequest.base="${{ github.base_ref }}"
+
       - name: Build
         run: dotnet build shared-platform.slnx --no-restore --configuration Release
 
@@ -38,6 +60,9 @@ jobs:
             --collect:"XPlat Code Coverage" \
             --results-directory ./coverage-results \
             --logger "trx;LogFileName=test-results.trx"
+
+      - name: SonarCloud End
+        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
