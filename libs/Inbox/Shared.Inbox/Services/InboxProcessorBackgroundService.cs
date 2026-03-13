@@ -95,9 +95,12 @@ public class InboxProcessorBackgroundService(
             return;
         }
 
-        var correlationId = headers["correlation_id"].ToString();
+        if (!headers.TryGetValue("correlation_id", out var correlationId))
+        {
+            return;
+        }
 
-        if (correlationId is null)
+        if (string.IsNullOrWhiteSpace(correlationId))
         {
             return;
         }
