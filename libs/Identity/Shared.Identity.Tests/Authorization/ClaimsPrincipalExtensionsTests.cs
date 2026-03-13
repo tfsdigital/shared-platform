@@ -87,6 +87,41 @@ public class ClaimsPrincipalExtensionsTests
     }
 
     [Fact]
+    public void GetUser_WithMissingEmail_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var name = "John Doe";
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+            new Claim("name", name),
+        };
+        var identity = new ClaimsIdentity(claims);
+        var principal = new ClaimsPrincipal(identity);
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => principal.GetUser());
+    }
+
+    [Fact]
+    public void GetUser_WithInvalidUserId_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, "not-a-valid-guid"),
+            new Claim("name", "John Doe"),
+            new Claim(ClaimTypes.Email, "john@example.com"),
+        };
+        var identity = new ClaimsIdentity(claims);
+        var principal = new ClaimsPrincipal(identity);
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => principal.GetUser());
+    }
+
+    [Fact]
     public void HasFullAccess_WithFullAccessRole_ReturnsTrue()
     {
         // Arrange

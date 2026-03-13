@@ -88,4 +88,19 @@ public class OutboxExtensionsTests
         // Assert
         Assert.Same(services, result);
     }
+
+    [Fact]
+    public void AddOutboxServices_WhenProviderIsBuilt_ShouldResolveHostedService()
+    {
+        // Arrange
+        var services = CreateBaseServices();
+        services.AddOutboxServices<TestDbContext>("orders", "Host=localhost", 5, 10);
+
+        // Act
+        var provider = services.BuildServiceProvider();
+        var hostedServices = provider.GetServices<IHostedService>().ToList();
+
+        // Assert
+        Assert.NotEmpty(hostedServices);
+    }
 }

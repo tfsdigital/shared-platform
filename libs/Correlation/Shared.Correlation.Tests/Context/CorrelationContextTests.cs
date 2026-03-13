@@ -134,6 +134,35 @@ public class CorrelationContextTests
     }
 
     [Fact]
+    public void NewCorrelationId_ShouldGenerateAndSetCorrelationId()
+    {
+        // Arrange
+        var context = new CorrelationContext();
+
+        // Act
+        var correlationId = context.NewCorrelationId();
+
+        // Assert
+        Assert.NotNull(correlationId);
+        Assert.NotEmpty(correlationId);
+        Assert.Equal(correlationId, context.GetCorrelationId());
+    }
+
+    [Fact]
+    public void NewCorrelationId_WhenCalledTwice_ShouldReturnDifferentIds()
+    {
+        // Arrange
+        var context = new CorrelationContext();
+
+        // Act
+        var first = context.NewCorrelationId();
+        var second = context.NewCorrelationId();
+
+        // Assert
+        Assert.NotEqual(first, second);
+    }
+
+    [Fact]
     public async Task CorrelationId_WhenAccessedFromDifferentThreads_ShouldMaintainThreadLocalValue()
     {
         // Arrange

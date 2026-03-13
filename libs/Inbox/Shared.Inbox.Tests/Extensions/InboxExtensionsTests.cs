@@ -7,6 +7,7 @@ using Shared.Correlation.Context;
 using Shared.Inbox.Extensions;
 using Shared.Messaging.Connection;
 using Shared.Publishing;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Shared.Inbox.Tests.Extensions;
 
@@ -102,5 +103,53 @@ public class InboxExtensionsTests
 
         // Assert
         Assert.Same(services, result);
+    }
+
+    [Fact]
+    public void AddInboxConsumer_WhenProviderIsBuilt_ShouldResolveHostedService()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSingleton(Substitute.For<IMessageBusConnectionFactory>());
+
+        services.AddInboxConsumer<TestInboxIntegrationEvent>(
+            moduleName: "test-module",
+            exchangeName: "test-exchange",
+            connectionString: "Host=localhost;Database=test",
+            intervalInSeconds: 5,
+            messagesBatchSize: 10
+        );
+
+        // Act
+        var provider = services.BuildServiceProvider();
+        var hostedServices = provider.GetServices<IHostedService>().ToList();
+
+        // Assert
+        Assert.NotEmpty(hostedServices);
+    }
+
+    [Fact]
+    public void AddInboxProcessor_WhenProviderIsBuilt_ShouldResolveHostedService()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSingleton(Substitute.For<ICorrelationContext>());
+        services.AddSingleton(Substitute.For<IEventPublisher>());
+
+        services.AddInboxProcessor(
+            moduleName: "test-module",
+            connectionString: "Host=localhost;Database=test",
+            intervalInSeconds: 5,
+            messagesBatchSize: 10
+        );
+
+        // Act
+        var provider = services.BuildServiceProvider();
+        var hostedServices = provider.GetServices<IHostedService>().ToList();
+
+        // Assert
+        Assert.NotEmpty(hostedServices);
     }
 }
