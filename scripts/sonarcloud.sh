@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load environment variables from .env file if it exists
-if [ -f ".env" ]; then
+if [[ -f ".env" ]]; then
     # Load variables from .env ignoring comments
     export $(grep -v '^#' .env | grep -v '^$' | xargs)
 fi
@@ -14,12 +14,12 @@ SONAR_HOST_URL="https://sonarcloud.io"
 COVERAGE_FILE="./test-results/coverage.xml"
 
 # Clean up old reports
-if [ -d "./test-results" ]; then
+if [[ -d "./test-results" ]]; then
     rm -rf ./test-results
 fi
 
 # Clean up previous build artifacts
-if [ -d "./.sonarqube" ]; then
+if [[ -d "./.sonarqube" ]]; then
     rm -rf ./.sonarqube
 fi
 
