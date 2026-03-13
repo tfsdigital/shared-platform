@@ -11,15 +11,12 @@ public class InboxStorageTests
 {
     private readonly InboxSettings _settings;
     private readonly InboxStorage _storage;
-    private readonly string _testConnectionString;
 
     public InboxStorageTests()
     {
-        // Use in-memory SQLite for testing
-        _testConnectionString = "Data Source=:memory:;";
         _settings = new InboxSettings
         {
-            ConnectionString = _testConnectionString,
+            ConnectionString = "Data Source=:memory:;",
             MessagesBatchSize = 10,
         };
         _storage = new InboxStorage(_settings);
@@ -60,6 +57,31 @@ public class InboxStorageTests
         // Note: This test would require a real database setup for proper integration testing
         await Assert.ThrowsAsync<ArgumentException>(
             async () => await _storage.GetUnprocessedMessagesAsync(CancellationToken.None)
+        );
+    }
+
+    [Fact]
+    public async Task UpdateMessageAsync_WithoutOpenConnection_ShouldThrowNullReferenceException()
+    {
+        // Arrange
+        var message = InboxMessage.Create(
+            Guid.NewGuid(),
+            new TestIntegrationEvent("test content"),
+            DateTime.UtcNow
+        );
+
+        // Act & Assert
+        await Assert.ThrowsAsync<NullReferenceException>(
+            async () => await _storage.UpdateMessageAsync(message, CancellationToken.None)
+        );
+    }
+
+    [Fact]
+    public async Task CommitAsync_WithoutOpenTransaction_ShouldThrowNullReferenceException()
+    {
+        // Act & Assert
+        await Assert.ThrowsAsync<NullReferenceException>(
+            async () => await _storage.CommitAsync(CancellationToken.None)
         );
     }
 

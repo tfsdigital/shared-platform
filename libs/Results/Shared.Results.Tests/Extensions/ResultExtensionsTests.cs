@@ -131,4 +131,23 @@ public class ResultExtensionsTests
         Assert.Null(createdResult.Location);
         Assert.Equal(StatusCodes.Status201Created, createdResult.StatusCode);
     }
+
+    [Fact]
+    public void NoContent_WithNotFoundResult_ReturnsNotFoundObjectResult()
+    {
+        // Arrange
+        var error = new Error("NOT_FOUND", "Resource not found");
+        var result = Result.NotFound(error);
+
+        // Act
+        var httpResult = result.NoContent();
+
+        // Assert
+        Assert.IsType<NotFound<Error[]>>(httpResult);
+        var notFoundResult = (NotFound<Error[]>)httpResult;
+        Assert.NotNull(notFoundResult.Value);
+        Assert.Single(notFoundResult.Value);
+        Assert.Equal(error, notFoundResult.Value[0]);
+        Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+    }
 }

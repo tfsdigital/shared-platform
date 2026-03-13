@@ -1,4 +1,5 @@
 using Shared.Correlation.Context;
+using System.Diagnostics;
 
 namespace Shared.Correlation.Tests.Context;
 
@@ -160,6 +161,33 @@ public class CorrelationContextTests
 
         // Assert
         Assert.NotEqual(first, second);
+    }
+
+    [Fact]
+    public void SetCorrelationId_WhenActivityIsActive_ShouldSetTagOnCurrentActivity()
+    {
+        // Arrange
+        var context = new CorrelationContext();
+        var correlationId = "activity-correlation-id";
+
+        using var activitySource = new ActivitySource("test-source");
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = _ => true,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        using var activity = activitySource.StartActivity("test-activity");
+        Assert.NotNull(Activity.Current);
+
+        // Act
+        context.SetCorrelationId(correlationId);
+
+        // Assert
+        Assert.Equal(correlationId, context.GetCorrelationId());
+        var tag = Activity.Current?.GetTagItem("correlation_id");
+        Assert.Equal(correlationId, tag);
     }
 
     [Fact]

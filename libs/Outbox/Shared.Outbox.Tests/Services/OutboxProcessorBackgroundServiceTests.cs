@@ -40,6 +40,27 @@ public class OutboxProcessorBackgroundServiceTests
     }
 
     [Fact]
+    public async Task ExecuteAsync_WhenCancellationTokenPreCancelled_ShouldExitWithoutProcessing()
+    {
+        // Arrange
+        var messageBus = Substitute.For<IMessageBus>();
+        var outboxStorage = Substitute.For<IOutboxStorage>();
+
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        var service = CreateService(messageBus, outboxStorage);
+
+        // Act & Assert - should complete without entering the while loop
+        await service.StartAsync(cts.Token);
+        await service.StopAsync(CancellationToken.None);
+
+        await outboxStorage
+            .DidNotReceive()
+            .GetMessagesAsync(Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
     public async Task ExecuteAsync_WhenNoMessages_ShouldNotCallMessageBusPublish()
     {
         // Arrange

@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Shared.Caching;
 using Shared.Caching.Distributed.Extensions;
 
@@ -45,5 +47,22 @@ public class CachingExtensionsTests
 
         // Assert
         Assert.Same(services, result);
+    }
+
+    [Fact]
+    public void AddDistributedCaching_ShouldConfigureRedisConnectionString()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        var connectionString = "localhost:6379";
+
+        services.AddDistributedCaching(connectionString);
+
+        // Act
+        var provider = services.BuildServiceProvider();
+        var options = provider.GetRequiredService<IOptions<RedisCacheOptions>>();
+
+        // Assert
+        Assert.Equal(connectionString, options.Value.Configuration);
     }
 }

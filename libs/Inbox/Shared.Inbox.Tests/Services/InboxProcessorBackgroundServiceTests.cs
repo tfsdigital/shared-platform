@@ -144,6 +144,24 @@ public class InboxProcessorBackgroundServiceTests
     }
 
     [Fact]
+    public async Task ExecuteAsync_WhenCancellationTokenPreCancelled_ShouldExitWithoutProcessing()
+    {
+        // Arrange
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        var service = CreateService();
+
+        // Act & Assert - should complete without entering the while loop
+        await service.StartAsync(cts.Token);
+        await service.StopAsync(CancellationToken.None);
+
+        await _inboxStorage
+            .DidNotReceive()
+            .GetUnprocessedMessagesAsync(Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
     public async Task ExecuteAsync_WhenMessageHasCorrelationHeader_ShouldSetCorrelationContext()
     {
         // Arrange
