@@ -90,11 +90,17 @@ public class InboxProcessorBackgroundService(
         Dictionary<string, string>? headers
     )
     {
-        if (
-            headers is null
-            || !headers.TryGetValue("correlation_id", out var correlationId)
-            || string.IsNullOrWhiteSpace(correlationId)
-        )
+        if (headers is null)
+        {
+            return;
+        }
+
+        if (!headers.TryGetValue("correlation_id", out var correlationId))
+        {
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(correlationId))
         {
             return;
         }
