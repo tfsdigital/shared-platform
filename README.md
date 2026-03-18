@@ -7,7 +7,6 @@ Cross-cutting libraries used across bounded contexts (establishments, orders, pr
 | [Caching](libs/Caching/README.md)                 | Cache abstraction and Redis implementation   |
 | [Core](libs/Core/README.md)                       | Domain base classes, events, identification  |
 | [Correlation](libs/Correlation/README.md)         | Correlation ID for distributed tracing       |
-| [ExternalClients](libs/ExternalClients/README.md) | HTTP client abstractions and implementations |
 | [Handlers](libs/Handlers/README.md)               | CQRS handler interfaces and base classes     |
 | [Identity](libs/Identity/README.md)               | JWT, claims, and authorization helpers       |
 | [Inbox](libs/Inbox/README.md)                     | Idempotent event consumption                 |
