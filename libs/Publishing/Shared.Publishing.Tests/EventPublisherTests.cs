@@ -107,7 +107,7 @@ public class EventPublisherTests
     {
         public Guid Id { get; } = Guid.NewGuid();
         public string Message { get; set; } = string.Empty;
-        public DateTime OccurredOn => DateTime.UtcNow;
+        public DateTime OccurredOnUtc => DateTime.UtcNow;
     }
 }
 

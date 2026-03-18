@@ -59,17 +59,17 @@ public class IntegrationEventTests
     }
 
     [Fact]
-    public void OccurredOn_WhenNotSet_ShouldBeDefaultDateTime()
+    public void OccurredOnUtc_WhenNotSet_ShouldBeDefaultDateTime()
     {
         // Arrange & Act
         var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123 };
 
         // Assert
-        Assert.Equal(default(DateTime), integrationEvent.OccurredOn);
+        Assert.Equal(default(DateTime), integrationEvent.OccurredOnUtc);
     }
 
     [Fact]
-    public void OccurredOn_WhenExplicitlySet_ShouldReturnSetValue()
+    public void OccurredOnUtc_WhenExplicitlySet_ShouldReturnSetValue()
     {
         // Arrange
         var expectedDateTime = DateTime.UtcNow;
@@ -79,11 +79,11 @@ public class IntegrationEventTests
         {
             Name = "Test",
             Value = 123,
-            OccurredOn = expectedDateTime,
+            OccurredOnUtc = expectedDateTime,
         };
 
         // Assert
-        Assert.Equal(expectedDateTime, integrationEvent.OccurredOn);
+        Assert.Equal(expectedDateTime, integrationEvent.OccurredOnUtc);
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public class IntegrationEventTests
     }
 
     [Fact]
-    public void Constructor_WhenCalledMultipleTimes_ShouldAllowDifferentOccurredOnTimes()
+    public void Constructor_WhenCalledMultipleTimes_ShouldAllowDifferentOccurredOnUtcTimes()
     {
         // Arrange
         var time1 = DateTime.UtcNow;
@@ -125,19 +125,19 @@ public class IntegrationEventTests
         {
             Name = "Test1",
             Value = 1,
-            OccurredOn = time1,
+            OccurredOnUtc = time1,
         };
         var event2 = new TestIntegrationEvent
         {
             Name = "Test2",
             Value = 2,
-            OccurredOn = time2,
+            OccurredOnUtc = time2,
         };
 
         // Assert
-        Assert.True(event2.OccurredOn > event1.OccurredOn);
-        Assert.Equal(time1, event1.OccurredOn);
-        Assert.Equal(time2, event2.OccurredOn);
+        Assert.True(event2.OccurredOnUtc > event1.OccurredOnUtc);
+        Assert.Equal(time1, event1.OccurredOnUtc);
+        Assert.Equal(time2, event2.OccurredOnUtc);
     }
 
     [Fact]
@@ -155,14 +155,74 @@ public class IntegrationEventTests
             Name = name,
             Value = value,
             Id = id,
-            OccurredOn = occurredOn,
+            OccurredOnUtc = occurredOn,
         };
 
         // Assert
         Assert.Equal(name, integrationEvent.Name);
         Assert.Equal(value, integrationEvent.Value);
         Assert.Equal(id, integrationEvent.Id);
-        Assert.Equal(occurredOn, integrationEvent.OccurredOn);
+        Assert.Equal(occurredOn, integrationEvent.OccurredOnUtc);
+    }
+
+    [Fact]
+    public void CorrelationId_WhenNotSet_ShouldBeEmptyString()
+    {
+        // Arrange & Act
+        var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123 };
+
+        // Assert
+        Assert.Equal(string.Empty, integrationEvent.CorrelationId);
+    }
+
+    [Fact]
+    public void CorrelationId_WhenExplicitlySet_ShouldReturnSetValue()
+    {
+        // Arrange & Act
+        var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123, CorrelationId = "corr-123" };
+
+        // Assert
+        Assert.Equal("corr-123", integrationEvent.CorrelationId);
+    }
+
+    [Fact]
+    public void CausationId_WhenNotSet_ShouldBeNull()
+    {
+        // Arrange & Act
+        var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123 };
+
+        // Assert
+        Assert.Null(integrationEvent.CausationId);
+    }
+
+    [Fact]
+    public void CausationId_WhenExplicitlySet_ShouldReturnSetValue()
+    {
+        // Arrange & Act
+        var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123, CausationId = "cause-456" };
+
+        // Assert
+        Assert.Equal("cause-456", integrationEvent.CausationId);
+    }
+
+    [Fact]
+    public void Source_WhenNotSet_ShouldBeEmptyString()
+    {
+        // Arrange & Act
+        var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123 };
+
+        // Assert
+        Assert.Equal(string.Empty, integrationEvent.Source);
+    }
+
+    [Fact]
+    public void Source_WhenExplicitlySet_ShouldReturnSetValue()
+    {
+        // Arrange & Act
+        var integrationEvent = new TestIntegrationEvent { Name = "Test", Value = 123, Source = "orders-service" };
+
+        // Assert
+        Assert.Equal("orders-service", integrationEvent.Source);
     }
 
     [Fact]

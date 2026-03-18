@@ -16,7 +16,10 @@ namespace Shared.Inbox.Tests.Services;
 public record TestConsumerEvent : IIntegrationEvent
 {
     public Guid Id { get; init; } = Guid.NewGuid();
-    public DateTime OccurredOn { get; init; } = DateTime.UtcNow;
+    public DateTime OccurredOnUtc { get; init; } = DateTime.UtcNow;
+    public string CorrelationId { get; init; } = string.Empty;
+    public string? CausationId { get; init; }
+    public string Source { get; init; } = string.Empty;
     public string Data { get; init; } = string.Empty;
 }
 

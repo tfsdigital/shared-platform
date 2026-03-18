@@ -48,7 +48,7 @@ public class OutboxPublisherTests
         // Arrange
         await using var context = CreateInMemoryContext();
         var publisher = new OutboxPublisher<TestOutboxDbContext>(context);
-        var integrationEvent = new TestIntegrationEvent { Id = Guid.NewGuid(), OccurredOn = DateTime.UtcNow };
+        var integrationEvent = new TestIntegrationEvent { Id = Guid.NewGuid(), OccurredOnUtc = DateTime.UtcNow };
 
         // Act
         await publisher.Publish(integrationEvent, "test-destination");
@@ -67,7 +67,7 @@ public class OutboxPublisherTests
         // Arrange
         await using var context = CreateInMemoryContext();
         var publisher = new OutboxPublisher<TestOutboxDbContext>(context);
-        var integrationEvent = new TestIntegrationEvent { Id = Guid.NewGuid(), OccurredOn = DateTime.UtcNow };
+        var integrationEvent = new TestIntegrationEvent { Id = Guid.NewGuid(), OccurredOnUtc = DateTime.UtcNow };
         var headers = new Dictionary<string, string>
         {
             { "correlation-id", "abc-123" },
@@ -93,7 +93,7 @@ public class OutboxPublisherTests
         // Arrange
         await using var context = CreateInMemoryContext();
         var publisher = new OutboxPublisher<TestOutboxDbContext>(context);
-        var integrationEvent = new TestIntegrationEvent { Id = Guid.NewGuid(), OccurredOn = DateTime.UtcNow };
+        var integrationEvent = new TestIntegrationEvent { Id = Guid.NewGuid(), OccurredOnUtc = DateTime.UtcNow };
 
         // Act
         await publisher.Publish(integrationEvent, "test-destination", null);

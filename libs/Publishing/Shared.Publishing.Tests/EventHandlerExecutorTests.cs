@@ -7,7 +7,7 @@ public class EventHandlerExecutorTests
     private class TestEvent : IEventBase
     {
         public Guid Id { get; init; } = Guid.NewGuid();
-        public DateTime OccurredOn { get; init; } = DateTime.UtcNow;
+        public DateTime OccurredOnUtc { get; init; } = DateTime.UtcNow;
     }
 
     private class TestEventHandler
