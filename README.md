@@ -5,7 +5,6 @@ Cross-cutting libraries used across bounded contexts (establishments, orders, pr
 | Feature                                           | Description                                  |
 | ------------------------------------------------- | -------------------------------------------- |
 | [Caching](libs/Caching/README.md)                 | Cache abstraction and Redis implementation   |
-| [Contracts](libs/Contracts/README.md)             | Cross-context integration events             |
 | [Core](libs/Core/README.md)                       | Domain base classes, events, identification  |
 | [Correlation](libs/Correlation/README.md)         | Correlation ID for distributed tracing       |
 | [ExternalClients](libs/ExternalClients/README.md) | HTTP client abstractions and implementations |
