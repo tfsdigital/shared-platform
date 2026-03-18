@@ -166,7 +166,7 @@ public class HandlersDependencyInjectionTests
 public class TestEvent : IEventBase
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public DateTime OccurredOn { get; set; } = DateTime.UtcNow;
+    public DateTime OccurredOnUtc { get; set; } = DateTime.UtcNow;
 }
 
 public class TestCommand : ICommand<TestResult> { }

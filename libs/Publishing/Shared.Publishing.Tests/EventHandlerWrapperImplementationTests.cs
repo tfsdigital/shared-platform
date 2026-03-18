@@ -9,7 +9,7 @@ public class EventHandlerWrapperImplementationTests
     public class TestEvent : IEventBase
     {
         public Guid Id { get; } = Guid.NewGuid();
-        public DateTime OccurredOn => DateTime.UtcNow;
+        public DateTime OccurredOnUtc => DateTime.UtcNow;
     }
 
     [Fact]

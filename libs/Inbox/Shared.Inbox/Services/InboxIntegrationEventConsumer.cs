@@ -47,7 +47,7 @@ public class InboxIntegrationEventConsumer<TEvent>(
                 var inboxMessage = InboxMessage.Create(
                     integrationEvent.Id,
                     integrationEvent,
-                    integrationEvent.OccurredOn,
+                    integrationEvent.OccurredOnUtc,
                     headers
                 );
 

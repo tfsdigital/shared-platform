@@ -18,7 +18,7 @@ public class OutboxPublisher<TContext>(TContext context) : IOutboxPublisher
             destination,
             integrationEvent.Id,
             integrationEvent,
-            integrationEvent.OccurredOn,
+            integrationEvent.OccurredOnUtc,
             headers
         );
 

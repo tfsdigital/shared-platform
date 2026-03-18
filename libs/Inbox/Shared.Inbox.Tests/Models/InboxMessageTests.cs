@@ -9,7 +9,10 @@ public class InboxMessageTests
     private record TestIntegrationEvent(string Name, int Value) : IIntegrationEvent
     {
         public Guid Id { get; } = Guid.NewGuid();
-        public DateTime OccurredOn { get; } = DateTime.UtcNow;
+        public DateTime OccurredOnUtc { get; } = DateTime.UtcNow;
+        public string CorrelationId { get; init; } = string.Empty;
+        public string? CausationId { get; init; }
+        public string Source { get; init; } = string.Empty;
     }
 
     [Fact]
