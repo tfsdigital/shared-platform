@@ -22,14 +22,10 @@
     <Project Path="libs/Identity/Shared.Identity/Shared.Identity.csproj" />
     <Project Path="libs/Identity/Shared.Identity.Tests/Shared.Identity.Tests.csproj" />
   </Folder>
-  <Folder Name="/Inbox/">
-    <Project Path="libs/Inbox/Shared.Inbox/Shared.Inbox.csproj" />
-    <Project Path="libs/Inbox/Shared.Inbox.Tests/Shared.Inbox.Tests.csproj" />
-  </Folder>
   <Folder Name="/Messaging/">
     <Project Path="libs/Messaging/Shared.Messaging.Abstractions/Shared.Messaging.Abstractions.csproj" />
-    <Project Path="libs/Messaging/Shared.Messaging/Shared.Messaging.csproj" />
-    <Project Path="libs/Messaging/Shared.Messaging.Tests/Shared.Messaging.Tests.csproj" />
+    <Project Path="libs/Messaging/Shared.Messaging.RabbitMQ/Shared.Messaging.RabbitMQ.csproj" />
+    <Project Path="libs/Messaging/Shared.Messaging.RabbitMQ.Tests/Shared.Messaging.RabbitMQ.Tests.csproj" />
   </Folder>
   <Folder Name="/Outbox/">
     <Project Path="libs/Outbox/Shared.Outbox.Abstractions/Shared.Outbox.Abstractions.csproj" />
