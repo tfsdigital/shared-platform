@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Description>Domain event publisher that collects events from aggregates and dispatches them to handlers.</Description>
-    <PackageReadmeFile>..\README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>

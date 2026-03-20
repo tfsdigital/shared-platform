@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Description>Outbox pattern abstractions defining IOutboxPublisher and IOutboxDbContext interfaces.</Description>
-    <PackageReadmeFile>..\README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
