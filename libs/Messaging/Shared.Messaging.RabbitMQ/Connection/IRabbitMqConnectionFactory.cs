@@ -1,8 +1,8 @@
 using RabbitMQ.Client;
 
-namespace Shared.Messaging.Connection;
+namespace Shared.Messaging.RabbitMQ.Connection;
 
-public interface IMessageBusConnectionFactory
+internal interface IRabbitMqConnectionFactory
 {
     Task<IConnection> CreateConnectionAsync(CancellationToken cancellationToken = default);
 }

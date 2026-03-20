@@ -1,22 +1,22 @@
 using NSubstitute;
 using RabbitMQ.Client;
-using Shared.Messaging.Connection;
+using Shared.Messaging.RabbitMQ.Connection;
 
-namespace Shared.Messaging.Tests;
+namespace Shared.Messaging.RabbitMQ.Tests;
 
-public class MessageBusTests
+public class RabbitMqMessageBusTests
 {
-    private readonly IMessageBusConnectionFactory _connectionFactory;
+    private readonly IRabbitMqConnectionFactory _connectionFactory;
     private readonly IConnection _connection;
     private readonly IChannel _channel;
-    private readonly MessageBus _messageBus;
+    private readonly RabbitMqMessageBus _messageBus;
 
-    public MessageBusTests()
+    public RabbitMqMessageBusTests()
     {
-        _connectionFactory = Substitute.For<IMessageBusConnectionFactory>();
+        _connectionFactory = Substitute.For<IRabbitMqConnectionFactory>();
         _connection = Substitute.For<IConnection>();
         _channel = Substitute.For<IChannel>();
-        _messageBus = new MessageBus(_connectionFactory);
+        _messageBus = new RabbitMqMessageBus(_connectionFactory);
 
         _connectionFactory.CreateConnectionAsync(Arg.Any<CancellationToken>()).Returns(_connection);
         _connection
