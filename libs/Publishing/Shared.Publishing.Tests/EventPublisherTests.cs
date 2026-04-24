@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
-using Shared.Core.Events;
+using Shared.Events;
 using Shared.Publishing.Extensions;
 
 namespace Shared.Publishing.Tests;
@@ -105,7 +105,7 @@ public class EventPublisherTests
 
     public class TestEvent : IEventBase
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public Guid MessageId { get; } = Guid.NewGuid();
         public string Message { get; set; } = string.Empty;
         public DateTime OccurredOnUtc => DateTime.UtcNow;
     }

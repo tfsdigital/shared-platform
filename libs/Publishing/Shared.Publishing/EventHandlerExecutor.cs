@@ -1,4 +1,4 @@
-using Shared.Core.Events;
+using Shared.Events;
 
 namespace Shared.Publishing;
 

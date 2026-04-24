@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Shared.Core\Shared.Core.csproj" />
+    <ProjectReference Include="..\..\Events\Shared.Events\Shared.Events.csproj" />
     <ProjectReference Include="..\..\Results\Shared.Results\Shared.Results.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-using Shared.Core.Events;
+using Shared.Events;
 
 namespace Shared.Publishing.Tests;
 
@@ -6,7 +6,7 @@ public class EventHandlerExecutorTests
 {
     private class TestEvent : IEventBase
     {
-        public Guid Id { get; init; } = Guid.NewGuid();
+        public Guid MessageId { get; init; } = Guid.NewGuid();
         public DateTime OccurredOnUtc { get; init; } = DateTime.UtcNow;
     }
 
