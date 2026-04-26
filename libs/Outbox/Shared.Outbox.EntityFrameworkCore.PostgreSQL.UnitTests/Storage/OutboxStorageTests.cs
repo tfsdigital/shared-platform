@@ -110,7 +110,10 @@ public class OutboxStorageTests
     [Fact]
     public async Task UpdateMessagesAsync_WithEmptyMessages_ShouldCompleteWithoutConnection()
     {
-        await _storage.UpdateMessagesAsync([], CancellationToken.None);
+        var exception = await Record.ExceptionAsync(
+            () => _storage.UpdateMessagesAsync([], CancellationToken.None));
+
+        Assert.Null(exception);
     }
 
     [Fact]
@@ -125,6 +128,9 @@ public class OutboxStorageTests
     [Fact]
     public async Task DisposeAsync_WithoutOpenConnection_ShouldComplete()
     {
-        await _storage.DisposeAsync();
+        var exception = await Record.ExceptionAsync(
+            async () => await _storage.DisposeAsync());
+
+        Assert.Null(exception);
     }
 }

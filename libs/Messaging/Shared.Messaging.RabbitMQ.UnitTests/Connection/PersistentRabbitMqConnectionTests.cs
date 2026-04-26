@@ -51,7 +51,10 @@ public class PersistentRabbitMqConnectionTests
     {
         var connection = CreateConnection("amqp://localhost");
 
-        await connection.DisposeAsync();
+        var exception = await Record.ExceptionAsync(
+            async () => await connection.DisposeAsync());
+
+        Assert.Null(exception);
     }
 
     private static PersistentRabbitMqConnection CreateConnection(string connectionString) =>
