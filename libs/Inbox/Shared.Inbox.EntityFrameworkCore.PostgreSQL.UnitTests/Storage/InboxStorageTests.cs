@@ -27,6 +27,36 @@ public class InboxStorageTests
     }
 
     [Fact]
+    public async Task Constructor_WithInvalidSchema_ShouldThrowArgumentException()
+    {
+        await using var context = CreateContext();
+        var options = MsOptions.Create(new InboxStorageOptions { Schema = "inbox.schema" });
+
+        var exception = Assert.Throws<ArgumentException>(
+            () => new InboxStorage<TestInboxDbContext>(
+                context,
+                options,
+                NullLogger<InboxStorage<TestInboxDbContext>>.Instance));
+
+        Assert.Equal("value", exception.ParamName);
+    }
+
+    [Fact]
+    public async Task Constructor_WithInvalidTableName_ShouldThrowArgumentException()
+    {
+        await using var context = CreateContext();
+        var options = MsOptions.Create(new InboxStorageOptions { TableName = "inbox-messages" });
+
+        var exception = Assert.Throws<ArgumentException>(
+            () => new InboxStorage<TestInboxDbContext>(
+                context,
+                options,
+                NullLogger<InboxStorage<TestInboxDbContext>>.Instance));
+
+        Assert.Equal("value", exception.ParamName);
+    }
+
+    [Fact]
     public async Task UpdateAsync_WhenProviderDoesNotSupportRawSql_Throws()
     {
         await using var context = CreateContext();

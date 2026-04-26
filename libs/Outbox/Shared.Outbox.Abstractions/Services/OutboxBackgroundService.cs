@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -16,10 +18,8 @@ internal sealed class OutboxBackgroundService<TContext>(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (true)
+        while (!IsCancellationRequested(stoppingToken))
         {
-            stoppingToken.ThrowIfCancellationRequested();
-
             var parallelOptions = new ParallelOptions
             {
                 MaxDegreeOfParallelism = _processor.MaxParallelism,
@@ -40,5 +40,11 @@ internal sealed class OutboxBackgroundService<TContext>(
             if (processedAny == 0)
                 await Task.Delay(TimeSpan.FromSeconds(_processor.IntervalInSeconds), stoppingToken);
         }
+    }
+
+    [SuppressMessage("Minor Code Smell", "S2589:Boolean expressions should not be gratuitous", Justification = "BackgroundService loops until the host cancels the token; async operations also observe the same token.")]
+    private static bool IsCancellationRequested(CancellationToken stoppingToken)
+    {
+        return stoppingToken.IsCancellationRequested;
     }
 }

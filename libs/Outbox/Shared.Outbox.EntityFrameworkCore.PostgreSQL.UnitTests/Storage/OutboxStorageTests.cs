@@ -39,6 +39,36 @@ public class OutboxStorageTests
     }
 
     [Fact]
+    public void Constructor_WithInvalidSchema_ShouldThrowArgumentException()
+    {
+        var options = MsOptions.Create(new OutboxStorageOptions
+        {
+            ConnectionString = "Host=localhost",
+            Schema = "outbox.schema"
+        });
+
+        var exception = Assert.Throws<ArgumentException>(
+            () => new OutboxStorage(options, _processorOptions));
+
+        Assert.Equal("value", exception.ParamName);
+    }
+
+    [Fact]
+    public void Constructor_WithInvalidTableName_ShouldThrowArgumentException()
+    {
+        var options = MsOptions.Create(new OutboxStorageOptions
+        {
+            ConnectionString = "Host=localhost",
+            TableName = "outbox-messages"
+        });
+
+        var exception = Assert.Throws<ArgumentException>(
+            () => new OutboxStorage(options, _processorOptions));
+
+        Assert.Equal("value", exception.ParamName);
+    }
+
+    [Fact]
     public async Task GetMessagesAsync_WithInvalidConnectionString_ShouldThrowException()
     {
         // Act & Assert
@@ -78,11 +108,23 @@ public class OutboxStorageTests
     }
 
     [Fact]
+    public async Task UpdateMessagesAsync_WithEmptyMessages_ShouldCompleteWithoutConnection()
+    {
+        await _storage.UpdateMessagesAsync([], CancellationToken.None);
+    }
+
+    [Fact]
     public async Task CommitAsync_WithoutOpenTransaction_ShouldThrowException()
     {
         // Act & Assert
         await Assert.ThrowsAsync<NullReferenceException>(
             async () => await _storage.CommitAsync(CancellationToken.None)
         );
+    }
+
+    [Fact]
+    public async Task DisposeAsync_WithoutOpenConnection_ShouldComplete()
+    {
+        await _storage.DisposeAsync();
     }
 }

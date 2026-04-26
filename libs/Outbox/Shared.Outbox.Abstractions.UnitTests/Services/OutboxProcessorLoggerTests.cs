@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 
 using Shared.Outbox.Abstractions.Models;
 using Shared.Outbox.Abstractions.Services;
@@ -37,6 +38,25 @@ public class OutboxProcessorLoggerTests
             message);
 
         Assert.Equal("events", message.Destination);
+    }
+
+    [Fact]
+    public void LogMethods_WhenLoggerIsEnabled_WriteAllBranches()
+    {
+        var logger = Substitute.For<Microsoft.Extensions.Logging.ILogger<OutboxProcessorLoggerTests>>();
+        var message = CreateMessage();
+        logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Information).Returns(true);
+        logger.IsEnabled(Microsoft.Extensions.Logging.LogLevel.Error).Returns(true);
+
+        OutboxProcessorLogger.LogPublished(logger, null, message);
+        OutboxProcessorLogger.LogPublished(logger, "orders", message);
+        OutboxProcessorLogger.LogCancelled(logger, null);
+        OutboxProcessorLogger.LogCancelled(logger, "orders");
+        OutboxProcessorLogger.LogFailed(logger, null, new InvalidOperationException("failed"), message);
+        OutboxProcessorLogger.LogFailed(logger, "orders", new InvalidOperationException("failed"), message);
+
+        logger.Received(4).IsEnabled(Microsoft.Extensions.Logging.LogLevel.Information);
+        logger.Received(2).IsEnabled(Microsoft.Extensions.Logging.LogLevel.Error);
     }
 
     private static OutboxMessage CreateMessage() =>

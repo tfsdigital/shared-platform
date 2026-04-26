@@ -35,6 +35,25 @@ public class PersistentRabbitMqConnectionTests
             () => connection.CreateChannelAsync(cancellationToken: CancellationToken.None));
     }
 
+    [Fact]
+    public async Task EnsureConnectedAsync_WhenCancellationTokenIsCancelled_ThrowsOperationCanceledException()
+    {
+        var connection = CreateConnection("amqp://localhost");
+        using var cancellationTokenSource = new CancellationTokenSource();
+        await cancellationTokenSource.CancelAsync();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(
+            () => connection.EnsureConnectedAsync(cancellationTokenSource.Token));
+    }
+
+    [Fact]
+    public async Task DisposeAsync_WhenConnectionWasNotCreated_Completes()
+    {
+        var connection = CreateConnection("amqp://localhost");
+
+        await connection.DisposeAsync();
+    }
+
     private static PersistentRabbitMqConnection CreateConnection(string connectionString) =>
         new(
             MsOptions.Create(new RabbitMqOptions { ConnectionString = connectionString }),
