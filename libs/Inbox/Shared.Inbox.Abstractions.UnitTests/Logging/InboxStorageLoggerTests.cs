@@ -14,5 +14,7 @@ public class InboxStorageLoggerTests
 
         InboxStorageLogger.LogRegistered(NullLogger<InboxStorageLoggerTests>.Instance, message);
         InboxStorageLogger.LogDuplicate(NullLogger<InboxStorageLoggerTests>.Instance, message);
+
+        Assert.Equal("message-1", message.MessageId);
     }
 }

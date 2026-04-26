@@ -16,8 +16,10 @@ internal sealed class OutboxBackgroundService<TContext>(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        while (true)
         {
+            stoppingToken.ThrowIfCancellationRequested();
+
             var parallelOptions = new ParallelOptions
             {
                 MaxDegreeOfParallelism = _processor.MaxParallelism,

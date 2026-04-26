@@ -13,11 +13,11 @@ public record OutboxStorageOptions
         if (string.IsNullOrWhiteSpace(ConnectionString))
             errors.Add("ConnectionString is required.");
 
-        if (string.IsNullOrWhiteSpace(Schema))
-            errors.Add("Schema is required.");
+        if (!PostgreSqlIdentifier.IsValid(Schema))
+            errors.Add("Schema must be a valid PostgreSQL identifier.");
 
-        if (string.IsNullOrWhiteSpace(TableName))
-            errors.Add("TableName is required.");
+        if (!PostgreSqlIdentifier.IsValid(TableName))
+            errors.Add("TableName must be a valid PostgreSQL identifier.");
 
         if (errors.Count > 0)
             throw new ArgumentException(

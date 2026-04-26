@@ -19,6 +19,8 @@ public class OutboxProcessorLoggerTests
             null,
             new InvalidOperationException("failed"),
             message);
+
+        Assert.Equal("events", message.Destination);
     }
 
     [Fact]
@@ -33,6 +35,8 @@ public class OutboxProcessorLoggerTests
             "orders",
             new InvalidOperationException("failed"),
             message);
+
+        Assert.Equal("events", message.Destination);
     }
 
     private static OutboxMessage CreateMessage() =>

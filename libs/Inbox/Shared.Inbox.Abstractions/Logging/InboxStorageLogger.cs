@@ -8,6 +8,8 @@ internal static class InboxStorageLogger
 {
     public static void LogRegistered<T>(ILogger<T> logger, InboxMessage message)
     {
+        if (!logger.IsEnabled(LogLevel.Information)) return;
+
         logger.LogInformation(
             "Inbox message '{MessageId}' registered for consumer '{Consumer}'",
             message.MessageId,
@@ -16,6 +18,8 @@ internal static class InboxStorageLogger
 
     public static void LogDuplicate<T>(ILogger<T> logger, InboxMessage message)
     {
+        if (!logger.IsEnabled(LogLevel.Warning)) return;
+
         logger.LogWarning(
             "Inbox message '{MessageId}' is duplicate for consumer '{Consumer}', skipping",
             message.MessageId,

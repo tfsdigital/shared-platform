@@ -24,7 +24,9 @@ internal static class RabbitMqTopologyProvisioner
         ILogger logger,
         CancellationToken ct = default)
     {
-        logger.LogInformation("[topology] exchange declared: {Exchange} (type={Type}, durable={Durable})", exchange, type, durable);
+        if (logger.IsEnabled(LogLevel.Information))
+            logger.LogInformation("[topology] exchange declared: {Exchange} (type={Type}, durable={Durable})", exchange, type, durable);
+
         await channel.ExchangeDeclareAsync(
             exchange: exchange,
             type: type,
@@ -41,7 +43,9 @@ internal static class RabbitMqTopologyProvisioner
     {
         var exchangeType = options.ExchangeType.ToExchangeTypeString();
 
-        logger.LogInformation("[topology] exchange declared: {Exchange} (type={Type}, durable={Durable})", options.Exchange, exchangeType, options.Durable);
+        if (logger.IsEnabled(LogLevel.Information))
+            logger.LogInformation("[topology] declaring consumer topology for queue {Queue}", options.Queue);
+
         await channel.ExchangeDeclareAsync(
             exchange: options.Exchange,
             type: exchangeType,
@@ -56,7 +60,9 @@ internal static class RabbitMqTopologyProvisioner
             arguments["x-dead-letter-routing-key"] = options.ResolvedDeadLetterRoutingKey;
         }
 
-        logger.LogInformation("[topology] queue declared: {Queue} (durable={Durable}, exclusive={Exclusive}, autoDelete={AutoDelete})", options.Queue, options.Durable, options.Exclusive, options.AutoDelete);
+        if (logger.IsEnabled(LogLevel.Debug))
+            logger.LogDebug("[topology] queue declared: {Queue} (durable={Durable}, exclusive={Exclusive}, autoDelete={AutoDelete})", options.Queue, options.Durable, options.Exclusive, options.AutoDelete);
+
         await channel.QueueDeclareAsync(
             queue: options.Queue,
             durable: options.Durable,
@@ -65,7 +71,9 @@ internal static class RabbitMqTopologyProvisioner
             arguments: arguments,
             cancellationToken: ct);
 
-        logger.LogInformation("[topology] binding: {Queue} -> {Exchange} (routingKey={RoutingKey})", options.Queue, options.Exchange, options.RoutingKey);
+        if (logger.IsEnabled(LogLevel.Debug))
+            logger.LogDebug("[topology] binding: {Queue} -> {Exchange} (routingKey={RoutingKey})", options.Queue, options.Exchange, options.RoutingKey);
+
         await channel.QueueBindAsync(
             queue: options.Queue,
             exchange: options.Exchange,
@@ -74,7 +82,9 @@ internal static class RabbitMqTopologyProvisioner
 
         if (!options.EnableDeadLetterQueue) return;
 
-        logger.LogInformation("[topology] DLQ exchange declared: {DlqExchange} (type=direct, durable={Durable})", options.ResolvedDeadLetterExchange, options.Durable);
+        if (logger.IsEnabled(LogLevel.Debug))
+            logger.LogDebug("[topology] DLQ exchange declared: {DlqExchange} (type=direct, durable={Durable})", options.ResolvedDeadLetterExchange, options.Durable);
+
         await channel.ExchangeDeclareAsync(
             exchange: options.ResolvedDeadLetterExchange,
             type: ExchangeType.Direct,
@@ -82,7 +92,9 @@ internal static class RabbitMqTopologyProvisioner
             autoDelete: false,
             cancellationToken: ct);
 
-        logger.LogInformation("[topology] DLQ queue declared: {DlqQueue}", options.ResolvedDeadLetterQueue);
+        if (logger.IsEnabled(LogLevel.Debug))
+            logger.LogDebug("[topology] DLQ queue declared: {DlqQueue}", options.ResolvedDeadLetterQueue);
+
         await channel.QueueDeclareAsync(
             queue: options.ResolvedDeadLetterQueue,
             durable: options.Durable,
@@ -90,7 +102,9 @@ internal static class RabbitMqTopologyProvisioner
             autoDelete: false,
             cancellationToken: ct);
 
-        logger.LogInformation("[topology] DLQ binding: {DlqQueue} -> {DlqExchange} (routingKey={RoutingKey})", options.ResolvedDeadLetterQueue, options.ResolvedDeadLetterExchange, options.ResolvedDeadLetterRoutingKey);
+        if (logger.IsEnabled(LogLevel.Debug))
+            logger.LogDebug("[topology] DLQ binding: {DlqQueue} -> {DlqExchange} (routingKey={RoutingKey})", options.ResolvedDeadLetterQueue, options.ResolvedDeadLetterExchange, options.ResolvedDeadLetterRoutingKey);
+
         await channel.QueueBindAsync(
             queue: options.ResolvedDeadLetterQueue,
             exchange: options.ResolvedDeadLetterExchange,

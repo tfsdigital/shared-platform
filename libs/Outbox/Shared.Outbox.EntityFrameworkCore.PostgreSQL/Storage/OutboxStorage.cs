@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using Dapper;
 
@@ -22,9 +23,12 @@ internal class OutboxStorage(
 {
     private readonly OutboxStorageOptions _storage = storageOptions.Value;
     private readonly OutboxProcessorOptions _processor = processorOptions.Value;
+    private readonly string _qualifiedTableName =
+        $"{PostgreSqlIdentifier.Quote(storageOptions.Value.Schema)}.{PostgreSqlIdentifier.Quote(storageOptions.Value.TableName)}";
     private NpgsqlConnection? _connection;
     private NpgsqlTransaction? _transaction;
 
+    [SuppressMessage("Security", "S2077:Make sure dynamically formatted SQL queries are safe", Justification = "Schema and table are validated PostgreSQL identifiers and quoted before interpolation; values remain parameterized.")]
     public async Task<IReadOnlyList<OutboxMessage>> GetMessagesAsync(CancellationToken cancellationToken)
     {
         _connection = new NpgsqlConnection(_storage.ConnectionString);
@@ -43,7 +47,7 @@ internal class OutboxStorage(
                 "processed_on_utc"     AS "ProcessedOnUtc",
                 "error_handled_on_utc" AS "ErrorHandledOnUtc",
                 "error"                AS "Error"
-            FROM "{_storage.Schema}"."{_storage.TableName}"
+            FROM {_qualifiedTableName}
             WHERE "processed_on_utc" IS NULL
             ORDER BY "occurred_on_utc"
             LIMIT @BatchSize
@@ -64,6 +68,7 @@ internal class OutboxStorage(
         return messages.AsList();
     }
 
+    [SuppressMessage("Security", "S2077:Make sure dynamically formatted SQL queries are safe", Justification = "Schema and table are validated PostgreSQL identifiers and quoted before interpolation; batch value placeholders are generated from message indexes and values remain parameterized.")]
     public async Task UpdateMessagesAsync(IReadOnlyList<OutboxMessage> messages, CancellationToken cancellationToken)
     {
         if (messages.Count == 0) return;
@@ -72,14 +77,14 @@ internal class OutboxStorage(
             messages.Select((_, i) => $"(@Id{i}::uuid, @ProcessedOn{i}::timestamptz, @Error{i}::text, @ErrorHandledOn{i}::timestamptz)"));
 
         var sql = $"""
-            UPDATE "{_storage.Schema}"."{_storage.TableName}"
+            UPDATE {_qualifiedTableName}
             SET "processed_on_utc" = v.processed_on_utc,
                 "error" = v.error,
                 "error_handled_on_utc" = v.error_handled_on_utc
             FROM (VALUES
                 {valuesList}
             ) AS v(id, processed_on_utc, error, error_handled_on_utc)
-            WHERE "{_storage.Schema}"."{_storage.TableName}"."id" = v.id
+            WHERE {_qualifiedTableName}."id" = v.id
             """;
 
         var parameters = new DynamicParameters();

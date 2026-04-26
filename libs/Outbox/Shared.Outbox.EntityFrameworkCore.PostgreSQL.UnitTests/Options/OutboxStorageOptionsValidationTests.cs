@@ -23,7 +23,7 @@ public class OutboxStorageOptionsValidationTests
         };
 
         var ex = Assert.Throws<ArgumentException>(options.Validate);
-        Assert.Contains("Schema is required", ex.Message);
+        Assert.Contains("Schema must be a valid PostgreSQL identifier", ex.Message);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class OutboxStorageOptionsValidationTests
         };
 
         var ex = Assert.Throws<ArgumentException>(options.Validate);
-        Assert.Contains("TableName is required", ex.Message);
+        Assert.Contains("TableName must be a valid PostgreSQL identifier", ex.Message);
     }
 
     [Fact]
@@ -51,8 +51,8 @@ public class OutboxStorageOptionsValidationTests
 
         var ex = Assert.Throws<ArgumentException>(options.Validate);
         Assert.Contains("ConnectionString is required", ex.Message);
-        Assert.Contains("Schema is required", ex.Message);
-        Assert.Contains("TableName is required", ex.Message);
+        Assert.Contains("Schema must be a valid PostgreSQL identifier", ex.Message);
+        Assert.Contains("TableName must be a valid PostgreSQL identifier", ex.Message);
     }
 
     [Fact]

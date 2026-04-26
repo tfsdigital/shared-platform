@@ -14,7 +14,7 @@ using MsOptions = Microsoft.Extensions.Options.Options;
 
 namespace Shared.Inbox.EntityFrameworkCore.PostgreSQL.Extensions;
 
-public static class InboxPostgreSQLExtensions
+public static class InboxPostgreSqlExtensions
 {
     public static InboxBuilder UsePostgreSQLStorage<TContext>(
         this InboxBuilder builder,
@@ -23,6 +23,7 @@ public static class InboxPostgreSQLExtensions
     {
         var options = new InboxStorageOptions();
         configure?.Invoke(options);
+        options.Validate();
 
         builder.Services.AddScoped<IInboxStorage>(sp =>
             new InboxStorage<TContext>(

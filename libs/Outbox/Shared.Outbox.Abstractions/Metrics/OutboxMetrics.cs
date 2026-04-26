@@ -6,6 +6,7 @@ namespace Shared.Outbox.Abstractions.Metrics;
 internal sealed class OutboxMetrics : IOutboxMetrics, IDisposable
 {
     public const string MeterName = "Outbox";
+    private const string MessageUnit = "{message}";
 
     private readonly Meter _meter;
     private readonly Counter<long> _published;
@@ -25,17 +26,17 @@ internal sealed class OutboxMetrics : IOutboxMetrics, IDisposable
 
         _published = _meter.CreateCounter<long>(
             "outbox.messages.published",
-            unit: "{message}",
+            unit: MessageUnit,
             description: "Number of outbox messages successfully published");
 
         _failed = _meter.CreateCounter<long>(
             "outbox.messages.failed",
-            unit: "{message}",
+            unit: MessageUnit,
             description: "Number of outbox messages that failed to publish");
 
         _processed = _meter.CreateCounter<long>(
             "outbox.messages.processed",
-            unit: "{message}",
+            unit: MessageUnit,
             description: "Total number of outbox messages processed, regardless of outcome");
 
         _fetchDuration = _meter.CreateHistogram<double>(
@@ -60,7 +61,7 @@ internal sealed class OutboxMetrics : IOutboxMetrics, IDisposable
 
         _batchSize = _meter.CreateHistogram<long>(
             "outbox.batch.size",
-            unit: "{message}",
+            unit: MessageUnit,
             description: "Number of messages processed per outbox cycle");
     }
 

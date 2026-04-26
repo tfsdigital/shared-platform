@@ -11,7 +11,7 @@ using MsOptions = Microsoft.Extensions.Options.Options;
 
 namespace Shared.Outbox.EntityFrameworkCore.PostgreSQL.Extensions;
 
-public static class OutboxPostgreSQLExtensions
+public static class OutboxPostgreSqlExtensions
 {
     public static OutboxBuilder UsePostgreSQLStorage<TDbContext>(
         this OutboxBuilder builder,

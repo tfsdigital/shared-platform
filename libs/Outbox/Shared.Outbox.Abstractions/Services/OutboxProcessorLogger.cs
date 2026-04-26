@@ -8,6 +8,8 @@ internal static class OutboxProcessorLogger
 {
     public static void LogPublished<T>(ILogger<T> logger, string? moduleName, OutboxMessage message)
     {
+        if (!logger.IsEnabled(LogLevel.Information)) return;
+
         if (moduleName is null)
             logger.LogInformation(
                 "Published message '{MessageType}' with id '{Id}'",
@@ -23,6 +25,8 @@ internal static class OutboxProcessorLogger
 
     public static void LogCancelled<T>(ILogger<T> logger, string? moduleName)
     {
+        if (!logger.IsEnabled(LogLevel.Information)) return;
+
         if (moduleName is null)
             logger.LogInformation("Outbox processing was cancelled");
         else
@@ -31,6 +35,8 @@ internal static class OutboxProcessorLogger
 
     public static void LogFailed<T>(ILogger<T> logger, string? moduleName, Exception ex, OutboxMessage message)
     {
+        if (!logger.IsEnabled(LogLevel.Error)) return;
+
         if (moduleName is null)
             logger.LogError(
                 ex,

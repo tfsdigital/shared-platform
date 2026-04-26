@@ -23,7 +23,7 @@ internal sealed class RabbitMqMessageContext(
     public async Task NackAsync(bool multiple = false, bool requeue = true, CancellationToken cancellationToken = default)
         => await channel.BasicNackAsync(deliveryTag, multiple: multiple, requeue: requeue, cancellationToken);
 
-    private static IReadOnlyDictionary<string, string> DecodeHeaders(IDictionary<string, object?>? rawHeaders)
+    private static Dictionary<string, string> DecodeHeaders(IDictionary<string, object?>? rawHeaders)
     {
         if (rawHeaders is null)
             return new Dictionary<string, string>();

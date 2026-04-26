@@ -54,14 +54,14 @@ internal sealed class RabbitMqConsumerWorker<TMessage, TConsumer>(
         catch (JsonException ex)
         {
             logger.LogError(ex, "Invalid JSON payload from queue {Queue}; discarding", options.Queue);
-            await channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: false);
+            await channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: false, ct);
             return;
         }
 
         if (message is null)
         {
             logger.LogError("Null deserialization result from queue {Queue}; discarding", options.Queue);
-            await channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: false);
+            await channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: false, ct);
             return;
         }
 
@@ -93,7 +93,7 @@ internal sealed class RabbitMqConsumerWorker<TMessage, TConsumer>(
         catch (Exception ex)
         {
             logger.LogError(ex, "Error processing message from queue {Queue}", options.Queue);
-            await channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: true);
+            await channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: true, ct);
         }
     }
 }
