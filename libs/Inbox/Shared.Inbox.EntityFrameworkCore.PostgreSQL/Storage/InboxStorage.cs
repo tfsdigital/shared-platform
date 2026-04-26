@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 using Shared.Inbox.Abstractions.Database;
 using Shared.Inbox.Abstractions.Interfaces;
 using Shared.Inbox.Abstractions.Logging;
@@ -25,7 +23,6 @@ internal sealed class InboxStorage<TContext>(
     private readonly string _qualifiedTableName =
         $"{PostgreSqlIdentifier.Quote(storageOptions.Value.Schema)}.{PostgreSqlIdentifier.Quote(storageOptions.Value.TableName)}";
 
-    [SuppressMessage("Security", "S2077:Make sure dynamically formatted SQL queries are safe", Justification = "Schema and table are validated PostgreSQL identifiers and quoted before interpolation; values remain parameterized.")]
     public async Task<InboxRegistrationResult> TryRegisterAsync(
         InboxMessage message,
         CancellationToken cancellationToken = default)
@@ -62,7 +59,6 @@ internal sealed class InboxStorage<TContext>(
         return result;
     }
 
-    [SuppressMessage("Security", "S2077:Make sure dynamically formatted SQL queries are safe", Justification = "Schema and table are validated PostgreSQL identifiers and quoted before interpolation; values remain parameterized.")]
     public async Task UpdateAsync(
         InboxMessage message,
         CancellationToken cancellationToken = default)

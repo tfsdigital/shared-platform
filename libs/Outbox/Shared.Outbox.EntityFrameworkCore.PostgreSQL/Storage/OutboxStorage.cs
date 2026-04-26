@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 using Dapper;
 
@@ -28,7 +27,6 @@ internal class OutboxStorage(
     private NpgsqlConnection? _connection;
     private NpgsqlTransaction? _transaction;
 
-    [SuppressMessage("Security", "S2077:Make sure dynamically formatted SQL queries are safe", Justification = "Schema and table are validated PostgreSQL identifiers and quoted before interpolation; values remain parameterized.")]
     public async Task<IReadOnlyList<OutboxMessage>> GetMessagesAsync(CancellationToken cancellationToken)
     {
         _connection = new NpgsqlConnection(_storage.ConnectionString);
@@ -68,7 +66,6 @@ internal class OutboxStorage(
         return messages.AsList();
     }
 
-    [SuppressMessage("Security", "S2077:Make sure dynamically formatted SQL queries are safe", Justification = "Schema and table are validated PostgreSQL identifiers and quoted before interpolation; batch value placeholders are generated from message indexes and values remain parameterized.")]
     public async Task UpdateMessagesAsync(IReadOnlyList<OutboxMessage> messages, CancellationToken cancellationToken)
     {
         if (messages.Count == 0) return;

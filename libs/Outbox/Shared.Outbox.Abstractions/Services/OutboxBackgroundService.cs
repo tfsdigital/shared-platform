@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -42,7 +40,6 @@ internal sealed class OutboxBackgroundService<TContext>(
         }
     }
 
-    [SuppressMessage("Minor Code Smell", "S2589:Boolean expressions should not be gratuitous", Justification = "BackgroundService loops until the host cancels the token; async operations also observe the same token.")]
     private static bool IsCancellationRequested(CancellationToken stoppingToken)
     {
         return stoppingToken.IsCancellationRequested;
