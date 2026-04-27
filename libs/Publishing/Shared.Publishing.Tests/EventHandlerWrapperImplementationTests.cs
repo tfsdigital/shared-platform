@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
-using Shared.Core.Events;
+using Shared.Events;
 
 namespace Shared.Publishing.Tests;
 
@@ -8,7 +8,7 @@ public class EventHandlerWrapperImplementationTests
 {
     public class TestEvent : IEventBase
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public Guid MessageId { get; } = Guid.NewGuid();
         public DateTime OccurredOnUtc => DateTime.UtcNow;
     }
 
