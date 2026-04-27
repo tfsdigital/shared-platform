@@ -1,4 +1,4 @@
-using Shared.Core.Events;
+using Shared.Events;
 using System.Collections.Concurrent;
 
 namespace Shared.Publishing;

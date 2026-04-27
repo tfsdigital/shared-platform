@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Core.Events;
+using Shared.Events;
 using Shared.Handlers.Extensions;
 using Shared.Results;
 using System.Reflection;
@@ -165,7 +165,7 @@ public class HandlersDependencyInjectionTests
 // Test classes for the unit tests
 public class TestEvent : IEventBase
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid MessageId { get; set; } = Guid.NewGuid();
     public DateTime OccurredOnUtc { get; set; } = DateTime.UtcNow;
 }
 

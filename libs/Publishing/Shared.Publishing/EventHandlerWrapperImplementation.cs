@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Core.Events;
+using Shared.Events;
 
 namespace Shared.Publishing;
 

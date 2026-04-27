@@ -5,7 +5,7 @@ Message bus abstraction for RabbitMQ. Used by Outbox and Inbox for publishing an
 ## Architecture
 
 - **Shared.Messaging.Abstractions**: `IMessageBus` interface
-- **Shared.Messaging**: RabbitMQ implementation, `IMessageBusConnectionFactory`
+- **Shared.Messaging.RabbitMQ**: RabbitMQ implementation, `IMessageBusConnectionFactory`
 
 ## Main Abstractions
 
