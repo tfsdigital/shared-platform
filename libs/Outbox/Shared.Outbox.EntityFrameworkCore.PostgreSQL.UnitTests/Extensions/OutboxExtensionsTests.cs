@@ -32,7 +32,7 @@ public class OutboxExtensionsTests
         }
     }
 
-    private static IServiceCollection CreateBaseServices()
+    private static ServiceCollection CreateBaseServices()
     {
         var services = new ServiceCollection();
         services.AddLogging();
